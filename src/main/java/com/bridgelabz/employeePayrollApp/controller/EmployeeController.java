@@ -32,7 +32,13 @@ public class EmployeeController {
     @PutMapping("/update/{name}")
     public EmployeeModel updateEmployee(@PathVariable String  name, @RequestBody EmployeeDTO employeeDTO) {
         log.info("Updating Employee: {}", name);
-        return employeeService.updateEmployee(name,employeeDTO);
+        EmployeeModel updatedEmployee = employeeService.updateEmployee(name,employeeDTO);
+        if (updatedEmployee == null) {
+            log.warn("Failed to update - Employee not found: {}", name);
+        } else {
+            log.info("Employee updated successfully: {}", updatedEmployee);
+        }
+        return updatedEmployee;
     }
 
     @DeleteMapping("/delete/{name}")
@@ -53,5 +59,10 @@ public class EmployeeController {
     public List<EmployeeModel> getAllEmployees() {
         log.info("Fetching all employees...");
         return employeeService.getAllEmployees();
+    }
+    @GetMapping("/testLogging")
+    public String testLogging() {
+        employeeService.testLogging();
+        return "Logging has been tested. Check logs for details.";
     }
 }
