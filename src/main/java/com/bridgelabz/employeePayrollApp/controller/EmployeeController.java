@@ -1,32 +1,26 @@
 package com.bridgelabz.employeePayrollApp.controller;
 
-import com.bridgelabz.employeePayrollApp.DTO.EmployeeDTO;
 import com.bridgelabz.employeePayrollApp.model.EmployeeModel;
-import org.springframework.http.ResponseEntity;
+import com.bridgelabz.employeePayrollApp.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    @GetMapping("/welcome")
-    public String welcomeMessage() {
-        return "Welcome to Employee Payroll App!";
-    }
-
-    @PostMapping("/add")
-    public EmployeeModel addEmployee(@RequestBody EmployeeModel employee) {
-        return employee;  // Temporary response (No DB yet)
-    }
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping("/get/{id}")
     public String getEmployeeById(@PathVariable Long id) {
         return "Fetching employee with ID: " + id;
     }
 
+    //UC-04
     @PostMapping("/create")
-    public String createEmployee() {
-        return "Creating new employee!";
+    public EmployeeModel createEmployee(@RequestParam String name, @RequestParam int salary) {
+        return employeeService.createEmployee(name, salary);
     }
 
     @PutMapping("/update/{id}")
@@ -39,15 +33,9 @@ public class EmployeeController {
         return "Deleting employee with ID: " + id;
     }
 
-    //UC-03
-    //mappings using DTO for uc3
-    @PostMapping("/DTO/create")
-    public EmployeeModel createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        EmployeeModel employee = new EmployeeModel(employeeDTO);
-        return employee;
-    }
+
     @GetMapping("/DTO/get/{name}/{salary}")
-    public EmployeeModel getEmployee(@PathVariable String name, @PathVariable double salary) {
-        return new EmployeeModel(new EmployeeDTO(name, salary)); // Returning employee details based on input
+    public EmployeeModel getEmployee(@PathVariable String name, @PathVariable int salary) {
+        return new EmployeeModel(name, salary); // Returning employee details based on input
     }
 }
