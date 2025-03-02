@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<String> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<String> getEmployeeById(@PathVariable int id) {
         log.info("Fetching employee with ID: {}", id);
         return ResponseEntity.ok("Fetching employee with ID: " + id);
     }
@@ -80,4 +80,7 @@ public class EmployeeController {
         employeeService.testLogging();
         return ResponseEntity.ok("Logging has been tested. Check logs for details.");
     }
+
+
+
 }
