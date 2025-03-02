@@ -1,6 +1,8 @@
+
 package com.bridgelabz.employeePayrollApp.service;
 
 import com.bridgelabz.employeePayrollApp.DTO.EmployeeDTO;
+import com.bridgelabz.employeePayrollApp.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeePayrollApp.model.EmployeeModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,8 +37,10 @@ public class EmployeeService {
                 return employee;
             }
         }
-        return null;
+        throw new EmployeeNotFoundException("Employee with ID " + name + " not found");
     }
+
+
     // Delete Employee
     public boolean deleteEmployee(String name) {
         log.info("Searching and deleting the employee with name: {}", name);
@@ -45,6 +49,8 @@ public class EmployeeService {
             log.info("Employee deleted successfully: {}", name);
         }else{
             log.error("Failed to delete Employee - Not Found: {}", name);
+            throw new EmployeeNotFoundException("Employee with ID " + name + " not found");
+
         }
         return isDeleted;
     }
@@ -55,4 +61,7 @@ public class EmployeeService {
         log.warn("This is a WARN message");
         log.error("This is an ERROR message");
     }
+
+
+
 }
