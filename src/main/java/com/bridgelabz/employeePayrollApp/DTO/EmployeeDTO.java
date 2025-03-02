@@ -1,5 +1,6 @@
 package com.bridgelabz.employeePayrollApp.DTO;
 
+import jakarta.persistence.Entity;
 import lombok.*;
 
 @Data
